@@ -30,16 +30,10 @@ function command_not_found_handle()
 		elif is_git_alias $1; then
 			git "$@"
 			return
-		else
-			echo A bash: $1: command not found
-			return 128
 		fi
-	else
-		echo B bash: $1: command not found
-		return 128
 	fi
 
-	echo C bash: $1: command not found
-	return 128
+	echo bash: $1: command not found
+	return 127
 }
 
