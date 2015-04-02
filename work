@@ -1,4 +1,27 @@
 
+function is_git_alias()
+{
+	[ -n "$1" ] || return
+
+	git alias | grep -q "^$1 ="
+}
+
+function is_git_command()
+{
+	local DIR1="/usr/libexec/git-core"
+	local DIR2="/usr/bin"
+
+	[ -n "$1" ] || return
+
+	[ -f "$DIR1/git-$1" ] && return
+	[ -f "$DIR2/git-$1" ] && return
+}
+
+function is_git_dir()
+{
+	git branch >& /dev/null
+}
+
 function command_not_found_handle()
 {
 	DEPTH=$((DEPTH+1))
@@ -8,7 +31,21 @@ function command_not_found_handle()
 
 	echo [$DEPTH] "$@"
 
-	blah
-	#set
+	if is_git_dir; then
+		echo GIT
+		if is_git_command $1; then
+			echo COMMAND
+		elif is_git_alias $1; then
+			echo ALIAS
+		else
+			echo RUBBISH
+		fi
+	else
+		echo NO
+	fi
+
+	# if [ $DEPTH = 1 ]; then
+	# 	blah
+	# fi
 }
 
