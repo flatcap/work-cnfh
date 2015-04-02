@@ -6,22 +6,6 @@ function command_not_found_handle()
 		return
 	fi
 
-	echo pre dir = $MYCD
-
-	if [[ "$1" =~ ^\.\.+$ ]]; then
-		local DIR="${1:1}"		# skip the first dot
-		DIR="${DIR//./../}"		# each . -> ../
-		cd "$DIR"
-		MYCD=$(pwd)
-		echo new dir = $MYCD
-		#echo SHELL $$
-		#kill -USR2 $$
-		#return
-	fi
-
-	echo new dir = $MYCD
-	kill -USR2 $$
-
 	echo [$DEPTH] "$@"
 
 	#set
