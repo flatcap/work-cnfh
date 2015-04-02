@@ -4,3 +4,5 @@ which would break everything else
 
 I can't have completion on the fake commands
 
+'dot' doesn't work, cnfh is in a subshell
+
