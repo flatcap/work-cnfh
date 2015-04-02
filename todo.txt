@@ -1,0 +1,6 @@
+hard to deal with diff, ls, etc
+they'll match on the command line unless I break the PATH
+which would break everything else
+
+I can't have completion on the fake commands
+

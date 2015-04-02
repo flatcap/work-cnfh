@@ -34,14 +34,14 @@ function command_not_found_handle()
 	if is_git_dir; then
 		echo GIT
 		if is_git_command $1; then
-			echo COMMAND
+			echo COMMAND $@
 		elif is_git_alias $1; then
-			echo ALIAS
+			echo ALIAS $@
 		else
-			echo RUBBISH
+			echo RUBBISH $@
 		fi
 	else
-		echo NO
+		echo NO $@
 	fi
 
 	# if [ $DEPTH = 1 ]; then
