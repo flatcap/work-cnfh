@@ -1,0 +1,14 @@
+
+function command_not_found_handle()
+{
+	DEPTH=$((DEPTH+1))
+	if [ $DEPTH -gt 3 ]; then
+		return
+	fi
+
+	echo [$DEPTH] "$@"
+
+	blah
+	#set
+}
+

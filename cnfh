@@ -1,0 +1,42 @@
+
+function command_not_found_handle()
+{
+	DEPTH=$((DEPTH+1))
+	if [ $DEPTH -gt 3 ]; then
+		return
+	fi
+
+	echo pre dir = $MYCD
+	if [[ "$1" =~ (v|vm|vr|vf)[0-9][0-9] ]]; then
+		local HOST="vm${1:(-2)}"	# last two characters
+		local USER="${1:1:-2}"		# not the first char, or the last two
+		if [[ "$USER" =~ ^(|m|r)$ ]]; then
+			USER="root"
+		else
+			USER="flatcap"
+		fi
+
+		shift
+		ssh $USER@$HOST "$@"
+		return
+	fi
+
+	if [[ "$1" =~ ^\.\.+$ ]]; then
+		local DIR="${1:1}"		# skip the first dot
+		DIR="${DIR//./../}"		# each . -> ../
+		cd "$DIR"
+		MYCD=$(pwd)
+		echo new dir = $MYCD
+		#echo SHELL $$
+		#kill -USR2 $$
+		#return
+	fi
+
+	echo new dir = $MYCD
+	kill -USR2 $$
+
+	echo [$DEPTH] "$@"
+
+	#set
+}
+
