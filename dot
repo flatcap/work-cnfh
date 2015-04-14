@@ -1,0 +1,14 @@
+
+function command_not_found_handle()
+{
+	if [[ "$1" =~ ^\.\.+$ ]]; then
+		local DIR="${1:1}"		# skip the first dot
+		DIR="${DIR//./../}"		# each . -> ../
+		cd "$DIR"
+		return
+	fi
+
+	echo bash: $1: command not found
+	return 127
+}
+
